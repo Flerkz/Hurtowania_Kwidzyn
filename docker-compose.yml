@@ -1,0 +1,26 @@
+services:
+  web:
+    build: .
+    ports:
+      - "${PORT:-8123}:8123"
+    environment:
+      PORT: 8123
+      DATABASE_URL: postgresql://${POSTGRES_USER:-pakodirect}:${POSTGRES_PASSWORD:-pakodirect}@db:5432/${POSTGRES_DB:-pakodirect}
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-pakodirect}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pakodirect}
+      POSTGRES_DB: ${POSTGRES_DB:-pakodirect}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:
