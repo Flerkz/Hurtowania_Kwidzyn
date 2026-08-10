@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logowanie — PakoDirect</title>
+<meta name="description" content="Zaloguj się do panelu PakoDirect.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-main container">
+    <a href="index.html" class="logo">
+      <span class="dot"></span>
+      PakoDirect
+      <small style="margin-left:2px;font-weight:500;">Opakowania dla gastronomii</small>
+    </a>
+
+    <form class="search-form" role="search">
+      <input type="text" placeholder="Czego szukasz? np. kubki papierowe 250ml" aria-label="Szukaj produktów">
+      <button type="submit" aria-label="Szukaj">🔍</button>
+    </form>
+
+    <div class="header-actions">
+      <a class="icon-link" href="kontakt.html"><span>📍</span>Punkty odbioru</a>
+      <a class="icon-link" href="logowanie.html" id="account-link"><span>👤</span><span id="account-label">Zaloguj się</span></a>
+      <a class="icon-link" href="#" id="logout-link" style="display:none;"><span>🚪</span>Wyloguj</a>
+      <a class="icon-link" href="koszyk.html">
+        <span class="badge">🛒<span class="count cart-count">0</span></span>
+        Koszyk
+      </a>
+      <button class="mobile-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+
+  <nav class="category-nav main-nav">
+    <div class="container">
+      <a href="produkty.html?cat=kubki">Kubki i Naczynia</a>
+      <a href="produkty.html?cat=pudelka">Pudełka Gastronomiczne</a>
+      <a href="produkty.html?cat=eko">Opakowania Ekologiczne</a>
+      <a href="produkty.html?cat=czystosc">Środki Czystości</a>
+      <a href="produkty.html?cat=cukiernia">Cukiernia</a>
+      <a href="produkty.html?cat=sklep">Artykuły dla Sklepów</a>
+      <a href="o-nas.html">O nas</a>
+      <a href="kontakt.html">Kontakt</a>
+    </div>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Logowanie</h1>
+    <p class="crumbs"><a href="index.html">Strona główna</a> / Logowanie</p>
+  </div>
+</section>
+
+<section class="auth-layout">
+  <div class="auth-card">
+    <h2>Zaloguj się</h2>
+    <p class="sub">Zaloguj się, aby zarządzać ofertą (admin) lub śledzić swoje zamówienia.</p>
+    <p class="auth-error" id="login-error"></p>
+    <form id="login-form" novalidate>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label for="login-email">E-mail</label>
+        <input id="login-email" name="email" type="email" required autocomplete="username">
+      </div>
+      <div class="form-group" style="margin-bottom:20px;">
+        <label for="login-password">Hasło</label>
+        <input id="login-password" name="password" type="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;">Zaloguj się</button>
+    </form>
+    <div class="auth-hint">
+      <strong>Konta demonstracyjne:</strong><br>
+      Admin: admin@pakodirect.pl / Admin123!<br>
+      Klient: klient@pakodirect.pl / Klient123!
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <a href="index.html" class="logo" style="color:#fff;"><span class="dot"></span>PakoDirect</a>
+        <p>Producent i dystrybutor opakowań jednorazowych dla gastronomii. Ceny fabryczne, szybka dostawa, pełne wsparcie dla biznesu.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">ig</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+      <div>
+        <h4>Produkty</h4>
+        <ul>
+          <li><a href="produkty.html?cat=kubki">Kubki i naczynia</a></li>
+          <li><a href="produkty.html?cat=pudelka">Pudełka gastronomiczne</a></li>
+          <li><a href="produkty.html?cat=eko">Opakowania ekologiczne</a></li>
+          <li><a href="produkty.html?cat=czystosc">Środki czystości</a></li>
+          <li><a href="produkty.html?cat=cukiernia">Cukiernia</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Firma</h4>
+        <ul>
+          <li><a href="o-nas.html">O nas</a></li>
+          <li><a href="o-nas.html#zespol">Zespół</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+          <li><a href="kontakt.html">Dla firm i cateringu</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <ul>
+          <li>📍 ul. Portowa 12, 80-000 Gdańsk</li>
+          <li>📞 <a href="tel:+48583000000">58 300 00 00</a></li>
+          <li>✉️ <a href="mailto:kontakt@pakodirect.pl">kontakt@pakodirect.pl</a></li>
+          <li>🕘 Pon–Pt: 8:00–16:00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 PakoDirect. Wszelkie prawa zastrzeżone.</span>
+      <span>Strona demonstracyjna — wzorowana strukturalnie na pakke.com.pl, wizualnie na oxypac.com.au.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-left">
+      <a href="tel:+48583000000">📞 58 300 00 00</a>
+      <a href="mailto:kontakt@pakodirect.pl">✉️ kontakt@pakodirect.pl</a>
+      <span>🚚 Darmowa dostawa już od 300 zł netto</span>
+    </div>
+    <div class="topbar-right">
+      <span>Producent na rynku od 2011 r.</span>
+      <a href="kontakt.html">Dla firm i cateringu</a>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/login.js"></script>
+</body>
+</html>

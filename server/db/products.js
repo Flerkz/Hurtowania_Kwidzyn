@@ -42,4 +42,47 @@ function getProductById(id) {
   return products.find((p) => p.id === id) || null;
 }
 
-module.exports = { getCategories, getAllProducts, getProductById };
+let nextId = products.length + 1;
+
+function addProduct({ name, category, price, image, badge }) {
+  const product = {
+    id: nextId++,
+    category,
+    name,
+    price: Number(price),
+    image,
+    ...(badge ? { badge } : {}),
+  };
+  products.push(product);
+  return product;
+}
+
+function updateProduct(id, { name, category, price, image, badge }) {
+  const product = products.find((p) => p.id === id);
+  if (!product) return null;
+  if (name !== undefined) product.name = name;
+  if (category !== undefined) product.category = category;
+  if (price !== undefined) product.price = Number(price);
+  if (image !== undefined) product.image = image;
+  if (badge !== undefined) {
+    if (badge) product.badge = badge;
+    else delete product.badge;
+  }
+  return product;
+}
+
+function deleteProduct(id) {
+  const idx = products.findIndex((p) => p.id === id);
+  if (idx === -1) return false;
+  products.splice(idx, 1);
+  return true;
+}
+
+module.exports = {
+  getCategories,
+  getAllProducts,
+  getProductById,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+};

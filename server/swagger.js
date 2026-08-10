@@ -10,6 +10,9 @@ const swaggerSpec = swaggerJsdoc({
     },
     servers: [{ url: '/api' }],
     components: {
+      securitySchemes: {
+        bearerAuth: { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      },
       schemas: {
         Product: {
           type: 'object',

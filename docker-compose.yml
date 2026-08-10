@@ -6,6 +6,7 @@ services:
     environment:
       PORT: 8123
       DATABASE_URL: postgresql://${POSTGRES_USER:-pakodirect}:${POSTGRES_PASSWORD:-pakodirect}@db:5432/${POSTGRES_DB:-pakodirect}
+      JWT_SECRET: ${JWT_SECRET:-dev-only-secret-change-me}
     depends_on:
       - db
     restart: unless-stopped

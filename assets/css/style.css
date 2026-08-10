@@ -450,3 +450,29 @@ section.newsletter .container{ position:relative; z-index:1; }
 @media (prefers-reduced-motion: reduce){
   .reveal, .reveal-stagger > *{ opacity:1; transform:none; transition:none; }
 }
+
+/* ---------------- Logowanie ---------------- */
+.auth-layout{ padding:70px 0 110px; display:flex; justify-content:center; }
+.auth-card{ width:100%; max-width:420px; background:#fff; border:1px solid var(--border); border-radius: var(--radius-lg); padding:38px; box-shadow: var(--shadow-sm); }
+.auth-card h2{ font-size:22px; margin-bottom:6px; color: var(--green-darker); }
+.auth-card p.sub{ color: var(--gray); font-size:14px; margin-bottom:26px; }
+.auth-error{ display:none; background:#fdecea; color:#c0392b; border-radius: var(--radius-md); padding:12px 14px; font-size:13px; margin-bottom:18px; }
+.auth-hint{ background: var(--mint); border-radius: var(--radius-md); padding:14px 16px; font-size:12.5px; color: var(--ink-soft); margin-top:24px; line-height:1.7; }
+.auth-hint strong{ color: var(--green-darker); }
+
+/* ---------------- Panel admina ---------------- */
+.admin-layout{ padding:60px 0 100px; }
+.admin-toolbar{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:26px; flex-wrap:wrap; gap:16px; }
+.admin-toolbar h2{ font-size:24px; margin-bottom:4px; }
+.admin-table-wrap{ background:#fff; border:1px solid var(--border); border-radius: var(--radius-lg); overflow-x:auto; margin-top:26px; }
+.admin-table{ width:100%; border-collapse:collapse; min-width:640px; }
+.admin-table th, .admin-table td{ padding:14px 16px; text-align:left; border-bottom:1px solid var(--border); font-size:14px; }
+.admin-table thead th{ background: var(--offwhite); font-size:12px; text-transform:uppercase; letter-spacing:.03em; color: var(--gray); }
+.admin-table tbody tr:last-child td{ border-bottom:none; }
+.admin-table tbody tr:hover{ background: var(--mint); }
+.admin-table img{ width:44px; height:44px; object-fit:cover; border-radius:8px; display:block; }
+.row-actions{ display:flex; gap:8px; }
+.row-actions button{ border:none; background: var(--mint); color: var(--green); width:30px; height:30px; border-radius:8px; cursor:pointer; font-size:14px; transition: background .2s ease, color .2s ease; }
+.row-actions button:hover{ background: var(--green); color:#fff; }
+.row-actions button.del{ background:#fdecea; color:#c0392b; }
+.row-actions button.del:hover{ background:#c0392b; color:#fff; }

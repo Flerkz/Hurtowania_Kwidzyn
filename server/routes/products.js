@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('../db/products');
+const { requireAuth, requireAdmin } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -61,6 +62,101 @@ router.get('/products/:id', (req, res) => {
     return res.status(404).json({ error: 'Produkt nie znaleziony' });
   }
   res.json(product);
+});
+
+/**
+ * @openapi
+ * /products:
+ *   post:
+ *     summary: Dodanie nowego produktu (admin)
+ *     tags: [Produkty]
+ *     security: [{ bearerAuth: [] }]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [name, category, price, image]
+ *             properties:
+ *               name: { type: string }
+ *               category: { type: string }
+ *               price: { type: number }
+ *               image: { type: string }
+ *               badge: { type: string, enum: [new, promo] }
+ *     responses:
+ *       201: { description: Produkt utworzony }
+ *       400: { description: Nieprawidłowe dane }
+ *       401: { description: Brak autoryzacji }
+ *       403: { description: Wymagane uprawnienia administratora }
+ */
+router.post('/products', requireAuth, requireAdmin, (req, res) => {
+  const { name, category, price, image, badge } = req.body || {};
+  if (!name || !category || price == null || !image) {
+    return res.status(400).json({ error: 'Brak wymaganych pól: name, category, price, image' });
+  }
+  const product = db.addProduct({ name, category, price, image, badge });
+  res.status(201).json(product);
+});
+
+/**
+ * @openapi
+ * /products/{id}:
+ *   put:
+ *     summary: Edycja produktu (admin)
+ *     tags: [Produkty]
+ *     security: [{ bearerAuth: [] }]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: integer }
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name: { type: string }
+ *               category: { type: string }
+ *               price: { type: number }
+ *               image: { type: string }
+ *               badge: { type: string, enum: [new, promo] }
+ *     responses:
+ *       200: { description: Produkt zaktualizowany }
+ *       401: { description: Brak autoryzacji }
+ *       403: { description: Wymagane uprawnienia administratora }
+ *       404: { description: Produkt nie znaleziony }
+ */
+router.put('/products/:id', requireAuth, requireAdmin, (req, res) => {
+  const updated = db.updateProduct(Number(req.params.id), req.body || {});
+  if (!updated) return res.status(404).json({ error: 'Produkt nie znaleziony' });
+  res.json(updated);
+});
+
+/**
+ * @openapi
+ * /products/{id}:
+ *   delete:
+ *     summary: Usunięcie produktu (admin)
+ *     tags: [Produkty]
+ *     security: [{ bearerAuth: [] }]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: integer }
+ *     responses:
+ *       204: { description: Produkt usunięty }
+ *       401: { description: Brak autoryzacji }
+ *       403: { description: Wymagane uprawnienia administratora }
+ *       404: { description: Produkt nie znaleziony }
+ */
+router.delete('/products/:id', requireAuth, requireAdmin, (req, res) => {
+  const ok = db.deleteProduct(Number(req.params.id));
+  if (!ok) return res.status(404).json({ error: 'Produkt nie znaleziony' });
+  res.status(204).send();
 });
 
 /**
