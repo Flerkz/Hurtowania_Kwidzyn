@@ -1,0 +1,13 @@
+{
+  "name": "pakodirect-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "API produktów PakoDirect (dane w pamięci — gotowe do podłączenia docelowej bazy danych)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
