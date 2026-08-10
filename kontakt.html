@@ -25,8 +25,8 @@
     <div class="header-actions">
       <a class="icon-link" href="kontakt.html"><span>📍</span>Punkty odbioru</a>
       <a class="icon-link" href="kontakt.html"><span>👤</span>Moje konto</a>
-      <a class="icon-link" href="produkty.html">
-        <span class="badge">🛒<span class="count">3</span></span>
+      <a class="icon-link" href="koszyk.html">
+        <span class="badge">🛒<span class="count cart-count">0</span></span>
         Koszyk
       </a>
       <button class="mobile-toggle" aria-label="Menu">☰</button>
@@ -57,7 +57,7 @@
 <section class="contact-layout">
   <div class="container">
     <div>
-      <div class="contact-cards">
+      <div class="contact-cards reveal-stagger">
         <div class="contact-card">
           <div class="ic">📍</div>
           <div><h4>Adres</h4><p>ul. Portowa 12, 80-000 Gdańsk</p></div>
@@ -78,7 +78,7 @@
       <div class="map-frame">🗺️ Mapa dojazdu — ul. Portowa 12, Gdańsk</div>
     </div>
 
-    <form class="contact-form" data-demo-form>
+    <form class="contact-form reveal" data-demo-form>
       <h2 style="margin-bottom:6px;">Wyślij zapytanie ofertowe</h2>
       <p style="color:var(--gray);margin-bottom:22px;">Odpowiadamy na zapytania biznesowe w ciągu 1 dnia roboczego.</p>
       <div class="form-row">
@@ -182,6 +182,7 @@
   </div>
 </div>
 
+<script src="assets/js/cart.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

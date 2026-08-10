@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initDemoForms();
   initProductsPage();
   markActiveNavLink();
+  initScrollReveal();
+  initBackToTop();
+  initCounters();
 });
 
 function initHeroSlider() {
@@ -56,6 +59,77 @@ function markActiveNavLink() {
   });
 }
 
+// Płynne pojawianie się sekcji przy przewijaniu
+function initScrollReveal() {
+  const targets = document.querySelectorAll('.reveal, .reveal-stagger');
+  if (!targets.length) return;
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach((t) => t.classList.add('is-visible'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach((t) => observer.observe(t));
+}
+
+// Przycisk "do góry"
+function initBackToTop() {
+  const btn = document.createElement('button');
+  btn.className = 'back-to-top';
+  btn.setAttribute('aria-label', 'Przewiń do góry');
+  btn.textContent = '↑';
+  document.body.appendChild(btn);
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('is-visible', window.scrollY > 500);
+  }, { passive: true });
+}
+
+// Licznik "12k+ zamówień" animowany od 0 przy wejściu w widok
+function initCounters() {
+  const counters = document.querySelectorAll('[data-count-to]');
+  if (!counters.length || !('IntersectionObserver' in window)) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseInt(el.dataset.countTo, 10);
+      const suffix = el.dataset.countSuffix || '';
+      const duration = 1200;
+      const start = performance.now();
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.6 });
+  counters.forEach((c) => observer.observe(c));
+}
+
+// Toast potwierdzający dodanie do koszyka
+function showCartToast(message) {
+  let toast = document.querySelector('.cart-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'cart-toast';
+    document.body.appendChild(toast);
+  }
+  toast.innerHTML = `<span>✓</span><span>${message}</span>`;
+  requestAnimationFrame(() => toast.classList.add('is-visible'));
+  clearTimeout(toast._hideTimer);
+  toast._hideTimer = setTimeout(() => toast.classList.remove('is-visible'), 2200);
+}
+
 const CATEGORY_NAMES = {
   kubki: 'Kubki i naczynia',
   pudelka: 'Pudełka gastronomiczne',
@@ -63,6 +137,8 @@ const CATEGORY_NAMES = {
   czystosc: 'Środki czystości',
   cukiernia: 'Cukiernia',
 };
+
+const BADGE_LABELS = { new: 'Nowość', promo: 'Promocja' };
 
 function initProductsPage() {
   const grid = document.getElementById('product-grid');
@@ -78,18 +154,20 @@ function initProductsPage() {
       return;
     }
     grid.innerHTML = products.map((p) => `
-      <article class="product-card" data-cat="${p.category}">
-        <div class="thumb"><img src="${p.image}" alt="${escapeHtml(p.name)}"></div>
+      <article class="product-card reveal" data-cat="${p.category}">
+        ${p.badge ? `<span class="ribbon ribbon-${p.badge}">${BADGE_LABELS[p.badge] || ''}</span>` : ''}
+        <div class="thumb"><img src="${p.image}" alt="${escapeHtml(p.name)}" loading="lazy"></div>
         <div class="info">
           <span class="cat-label">${CATEGORY_NAMES[p.category] || p.category}</span>
           <h3>${escapeHtml(p.name)}</h3>
           <div class="price-row">
             <span class="price">${p.price.toFixed(2).replace('.', ',')} zł</span>
-            <button class="add-btn" aria-label="Dodaj do koszyka">+</button>
+            <button class="add-btn" data-id="${p.id}" aria-label="Dodaj do koszyka">+</button>
           </div>
         </div>
       </article>
     `).join('');
+    initScrollReveal();
   }
 
   function applyFilter() {
@@ -131,6 +209,17 @@ function initProductsPage() {
       });
     });
   }
+
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('.add-btn');
+    if (!btn) return;
+    const product = allProducts.find((p) => p.id === Number(btn.dataset.id));
+    if (!product || typeof PakoCart === 'undefined') return;
+    PakoCart.addItem(product, 1);
+    showCartToast('Dodano do koszyka');
+    btn.classList.add('is-added');
+    setTimeout(() => btn.classList.remove('is-added'), 300);
+  });
 
   grid.innerHTML = '<p class="loading-msg">Ładowanie produktów…</p>';
 

@@ -25,8 +25,8 @@
     <div class="header-actions">
       <a class="icon-link" href="kontakt.html"><span>📍</span>Punkty odbioru</a>
       <a class="icon-link" href="kontakt.html"><span>👤</span>Moje konto</a>
-      <a class="icon-link" href="produkty.html">
-        <span class="badge">🛒<span class="count">3</span></span>
+      <a class="icon-link" href="koszyk.html">
+        <span class="badge">🛒<span class="count cart-count">0</span></span>
         Koszyk
       </a>
       <button class="mobile-toggle" aria-label="Menu">☰</button>
@@ -49,6 +49,8 @@
 
 <!-- HERO -->
 <section class="hero">
+  <span class="blob blob-1"></span>
+  <span class="blob blob-2"></span>
   <div class="container">
     <div class="hero-copy">
       <span class="eyebrow">Producent opakowań jednorazowych</span>
@@ -68,7 +70,7 @@
     <div class="hero-media">
       <img src="https://images.unsplash.com/photo-1648587456176-4969b0124b12?auto=format&fit=crop&w=1000&q=80" alt="Opakowania jednorazowe dla gastronomii — pudełka i kubki na wynos">
       <div class="float-card">
-        <span class="num">12k+</span>
+        <span class="num"><span data-count-to="12" data-count-suffix="k+">0</span></span>
         <small>zamówień zrealizowanych rocznie dla lokali gastronomicznych w całej Polsce</small>
       </div>
     </div>
@@ -94,7 +96,7 @@
       <h2>Wszystko, czego potrzebuje Twój lokal</h2>
       <p>Trzy filary oferty PakoDirect — od jednorazowych kubków po pełną linię środków czystości dla gastronomii.</p>
     </div>
-    <div class="cat-grid">
+    <div class="cat-grid reveal-stagger">
       <a class="cat-card" href="produkty.html?cat=kubki">
         <img src="https://images.unsplash.com/photo-1598908314732-07113901949e?auto=format&fit=crop&w=700&q=80" alt="Plastikowe i papierowe kubki jednorazowe">
         <div class="cat-card-body">
@@ -131,7 +133,7 @@
       <h2>Kupuj bezpośrednio od producenta</h2>
       <p>Zaopatrz swój lokal w codzienne opakowania w cenach fabrycznych, z szybką dostawą i rabatem powitalnym.</p>
     </div>
-    <div class="value-grid">
+    <div class="value-grid reveal-stagger">
       <div class="value-card">
         <div class="ic">💰</div>
         <h3>Nawet 40% taniej niż w hurtowni</h3>
@@ -159,7 +161,7 @@
       <h2>Producent kontra hurtownia i sklep detaliczny</h2>
       <p>Sprawdź, dlaczego zakupy bezpośrednio u producenta się opłacają.</p>
     </div>
-    <div class="compare-wrap">
+    <div class="compare-wrap reveal">
       <table class="compare-table">
         <thead>
           <tr>
@@ -207,7 +209,7 @@
 </section>
 
 <!-- ABOUT / SEO TEXT BLOCK 1 -->
-<section class="about-block alt">
+<section class="about-block alt reveal">
   <div class="container">
     <div>
       <span class="eyebrow">Producent opakowań jednorazowych</span>
@@ -225,7 +227,7 @@
 </section>
 
 <!-- ABOUT / SEO TEXT BLOCK 2 (reversed) -->
-<section class="about-block reverse">
+<section class="about-block reverse reveal">
   <div class="container">
     <img src="https://images.unsplash.com/photo-1669384537216-24740a56a2d5?auto=format&fit=crop&w=800&q=80" alt="Ekologiczne opakowania biodegradowalne">
     <div>
@@ -238,7 +240,7 @@
 </section>
 
 <!-- CERTIFICATIONS -->
-<section class="certs">
+<section class="certs reveal">
   <div class="container">
     <img src="https://images.unsplash.com/photo-1589793463357-5fb813435467?auto=format&fit=crop&w=800&q=80" alt="Certyfikowana produkcja opakowań spożywczych">
     <div>
@@ -257,13 +259,14 @@
 
 <!-- TESTIMONIALS -->
 <section class="testimonials">
+  <span class="blob"></span>
   <div class="container">
     <div class="section-head">
       <span class="eyebrow" style="justify-content:center;">Zaufali nam</span>
       <h2>Ponad 1000 lokali gastronomicznych w całej Polsce</h2>
       <p>Restauracje, kawiarnie i firmy cateringowe wybierają PakoDirect ze względu na cenę, jakość i niezawodność dostaw.</p>
     </div>
-    <div class="t-grid">
+    <div class="t-grid reveal-stagger">
       <div class="t-card">
         <div class="stars">★★★★★</div>
         <p>„Przeszliśmy z lokalnej hurtowni na PakoDirect i od razu obniżyliśmy koszty opakowań o ponad 30%. Dostawy zawsze na czas.”</p>
@@ -345,6 +348,7 @@
   </div>
 </div>
 
+<script src="assets/js/cart.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

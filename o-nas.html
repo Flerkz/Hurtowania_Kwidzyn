@@ -25,8 +25,8 @@
     <div class="header-actions">
       <a class="icon-link" href="kontakt.html"><span>📍</span>Punkty odbioru</a>
       <a class="icon-link" href="kontakt.html"><span>👤</span>Moje konto</a>
-      <a class="icon-link" href="produkty.html">
-        <span class="badge">🛒<span class="count">3</span></span>
+      <a class="icon-link" href="koszyk.html">
+        <span class="badge">🛒<span class="count cart-count">0</span></span>
         Koszyk
       </a>
       <button class="mobile-toggle" aria-label="Menu">☰</button>
@@ -54,7 +54,7 @@
   </div>
 </section>
 
-<section class="about-block">
+<section class="about-block reveal">
   <div class="container">
     <div>
       <span class="eyebrow">Nasza historia</span>
@@ -72,7 +72,7 @@
       <span class="eyebrow" style="justify-content:center;">Kamienie milowe</span>
       <h2>15 lat rozwoju branży opakowań</h2>
     </div>
-    <div class="timeline-grid">
+    <div class="timeline-grid reveal-stagger">
       <div class="tl-card"><div class="yr">2011</div><p>Start działalności — mała drukarnia opakowań papierowych w Gdańsku</p></div>
       <div class="tl-card"><div class="yr">2015</div><p>Uruchomienie własnej linii produkcyjnej pojemników plastikowych</p></div>
       <div class="tl-card"><div class="yr">2020</div><p>Wprowadzenie pełnej linii opakowań biodegradowalnych i kompostowalnych</p></div>
@@ -81,7 +81,7 @@
   </div>
 </section>
 
-<section class="about-block alt reverse">
+<section class="about-block alt reverse reveal">
   <div class="container">
     <img src="https://images.unsplash.com/photo-1650964336686-7f7be9e35f35?auto=format&fit=crop&w=800&q=80" alt="Odpowiedzialna produkcja opakowań ekologicznych">
     <div>
@@ -104,7 +104,7 @@
       <h2>Poznaj nasz zespół</h2>
       <p>Osoby, które każdego dnia dbają o jakość produktów i obsługę naszych klientów.</p>
     </div>
-    <div class="team-grid">
+    <div class="team-grid reveal-stagger">
       <div class="team-card">
         <img src="https://ui-avatars.com/api/?name=Tomasz+Wisniewski&background=286245&color=fff&size=400&font-size=0.36" alt="Tomasz Wiśniewski">
         <strong>Tomasz Wiśniewski</strong>
@@ -130,6 +130,7 @@
 </section>
 
 <section class="newsletter">
+  <span class="blob"></span>
   <div class="container">
     <div>
       <h2>Chcesz dołączyć do grona naszych klientów?</h2>
@@ -201,6 +202,7 @@
   </div>
 </div>
 
+<script src="assets/js/cart.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
