@@ -72,3 +72,5 @@ Dockerfile, docker-compose.yml                         — konteneryzacja (web +
 | GET | `/api/products` | Lista produktów (opcjonalnie `?category=kubki`) |
 | GET | `/api/products/:id` | Pojedynczy produkt |
 | GET | `/api/categories` | Lista kategorii |
+
+Interaktywna dokumentacja (Swagger UI) ze wszystkimi endpointami: **http://localhost:8123/api-docs**
