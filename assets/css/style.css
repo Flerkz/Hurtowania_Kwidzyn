@@ -336,6 +336,78 @@ section.newsletter .container{ position:relative; z-index:1; }
 .product-card .thumb img{ transition: transform .5s ease; }
 .product-card:hover .thumb img{ transform: scale(1.08); }
 
+/* ---------------- Hover polish (dodatkowe animacje) ---------------- */
+.logo{ transition: opacity .2s ease; }
+.logo:hover{ opacity:.82; }
+.logo .dot{ transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
+.logo:hover .dot{ transform: scale(1.4) rotate(90deg); }
+
+.header-actions .icon-link{ transition: color .2s ease, transform .2s ease; }
+.header-actions .icon-link:hover{ color: var(--green); transform: translateY(-2px); }
+.header-actions .icon-link .badge{ transition: transform .2s ease; }
+.header-actions .icon-link:hover .badge{ transform: scale(1.08); }
+
+.search-form button{ transition: background .2s ease; }
+.search-form button:hover{ background: var(--green-dark); }
+
+nav.category-nav a{ transition: border-color .25s ease, color .2s ease, transform .2s ease; }
+nav.category-nav a:hover{ transform: translateY(-1px); }
+
+.hero-quicklinks a{ transition: border-color .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease; }
+.hero-quicklinks a:hover{ transform: translateY(-3px); box-shadow: var(--shadow-sm); }
+
+.btn-outline{ transition: background .2s ease, color .2s ease, transform .2s ease; }
+.btn-outline:hover{ transform: translateY(-2px); }
+
+.value-card{ transition: transform .3s ease, box-shadow .3s ease; }
+.value-card:hover{ transform: translateY(-7px); box-shadow: var(--shadow-md); }
+.value-card .ic{ transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
+.value-card:hover .ic{ transform: scale(1.15) rotate(-6deg); }
+
+.t-card{ transition: transform .3s ease, background .3s ease; }
+.t-card:hover{ transform: translateY(-6px); background: rgba(255,255,255,.08); }
+.t-card .avatar{ transition: transform .25s ease; }
+.t-card:hover .avatar{ transform: scale(1.1); }
+
+.tl-card{ transition: transform .3s ease, box-shadow .3s ease; }
+.tl-card:hover{ transform: translateY(-6px); box-shadow: var(--shadow-md); }
+.tl-card .yr{ transition: transform .25s ease; }
+.tl-card:hover .yr{ transform: scale(1.08); }
+
+.team-card{ transition: transform .25s ease; }
+.team-card:hover{ transform: translateY(-4px); }
+.team-card img{ transition: transform .4s ease, box-shadow .3s ease; }
+.team-card:hover img{ transform: scale(1.04); box-shadow: var(--shadow-md); }
+
+.contact-card{ transition: transform .25s ease, box-shadow .25s ease; }
+.contact-card:hover{ transform: translateY(-4px); box-shadow: var(--shadow-sm); }
+.contact-card .ic{ transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
+.contact-card:hover .ic{ transform: scale(1.12) rotate(6deg); }
+
+.cert-badges span{ transition: background .2s ease, color .2s ease, transform .2s ease; cursor:default; }
+.cert-badges span:hover{ background: var(--green); color:#fff; transform: translateY(-2px); }
+
+.compare-table tbody tr{ transition: background .2s ease; }
+.compare-table tbody tr:hover{ background: var(--mint); }
+.compare-table tbody tr:hover td.us{ background: var(--mint-2); }
+
+.filters li a{ transition: color .2s ease, transform .2s ease; display:inline-flex; }
+.filters li a:hover{ transform: translateX(4px); }
+
+.footer-social a{ transition: background .2s ease, color .2s ease, transform .2s ease; }
+.footer-social a:hover{ transform: translateY(-3px) rotate(-6deg); }
+
+.footer-grid a{ transition: color .2s ease; }
+
+.cart-item img{ transition: transform .3s ease; }
+.cart-item:hover img{ transform: scale(1.06); }
+
+.payment-method{ transition: border-color .2s ease, background .2s ease, transform .2s ease; }
+.payment-method:hover{ transform: translateY(-2px); }
+
+.admin-table img{ transition: transform .25s ease; }
+.admin-table tbody tr:hover img{ transform: scale(1.15); }
+
 /* Ribbon badges */
 .product-card{ position:relative; }
 .ribbon{ position:absolute; top:14px; left:0; padding:5px 16px 5px 14px; font-size:11px; font-weight:800; letter-spacing:.03em; text-transform:uppercase; color:#fff; z-index:2; border-radius: 0 999px 999px 0; box-shadow: 0 4px 10px rgba(0,0,0,.15); }
