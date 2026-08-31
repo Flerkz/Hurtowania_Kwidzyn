@@ -143,18 +143,21 @@ const BADGE_LABELS = { new: 'Nowość', promo: 'Promocja' };
 function initProductsPage() {
   const grid = document.getElementById('product-grid');
   const filterList = document.getElementById('category-filters');
+  const searchBar = document.getElementById('search-results-bar');
   if (!grid || !filterList) return;
 
   let allProducts = [];
   let activeCategory = new URLSearchParams(window.location.search).get('cat') || 'all';
+  let searchQuery = new URLSearchParams(window.location.search).get('q') || '';
+  let hashHandled = false;
 
   function renderGrid(products) {
     if (!products.length) {
-      grid.innerHTML = '<p class="loading-msg">Brak produktów w tej kategorii.</p>';
+      grid.innerHTML = `<p class="loading-msg">${searchQuery ? 'Brak produktów pasujących do wyszukiwania.' : 'Brak produktów w tej kategorii.'}</p>`;
       return;
     }
     grid.innerHTML = products.map((p) => `
-      <article class="product-card reveal" data-cat="${p.category}">
+      <article class="product-card reveal" id="product-${p.id}" data-cat="${p.category}">
         ${p.badge ? `<span class="ribbon ribbon-${p.badge}">${BADGE_LABELS[p.badge] || ''}</span>` : ''}
         <div class="thumb"><img src="${p.image}" alt="${escapeHtml(p.name)}" loading="lazy"></div>
         <div class="info">
@@ -172,11 +175,62 @@ function initProductsPage() {
     initScrollReveal();
   }
 
+  function renderSearchBarUI(resultCount) {
+    if (!searchBar) return;
+    if (!searchQuery) {
+      searchBar.innerHTML = '';
+      searchBar.style.display = 'none';
+      return;
+    }
+    searchBar.style.display = '';
+    searchBar.innerHTML = `
+      <span>Wyniki wyszukiwania dla „<strong>${escapeHtml(searchQuery)}</strong>” — ${resultCount} ${resultCount === 1 ? 'produkt' : 'produktów'}</span>
+      <a href="#" id="clear-search">Wyczyść wyszukiwanie ✕</a>
+    `;
+    const clearLink = document.getElementById('clear-search');
+    if (clearLink) {
+      clearLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        searchQuery = '';
+        const url = new URL(window.location.href);
+        url.searchParams.delete('q');
+        window.history.replaceState({}, '', url);
+        applyFilter();
+      });
+    }
+  }
+
   function applyFilter() {
-    const filtered = activeCategory === 'all'
+    let filtered = activeCategory === 'all'
       ? allProducts
       : allProducts.filter((p) => p.category === activeCategory);
+
+    if (searchQuery) {
+      const needle = searchQuery.toLowerCase();
+      filtered = filtered
+        .map((p) => ({ p, score: relevanceScore(p, needle) }))
+        .filter((r) => r.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .map((r) => r.p);
+    }
+
     renderGrid(filtered);
+    renderSearchBarUI(filtered.length);
+    handleHashHighlight();
+  }
+
+  function handleHashHighlight() {
+    if (hashHandled) return;
+    const hash = window.location.hash;
+    if (!hash || !hash.startsWith('#product-')) return;
+    const el = document.querySelector(hash);
+    if (!el) return;
+    hashHandled = true;
+    setTimeout(() => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.classList.add('is-highlighted');
+      setTimeout(() => el.classList.remove('is-highlighted'), 1800);
+    }, 150);
   }
 
   function setActiveCategory(slug) {
@@ -239,6 +293,27 @@ function initProductsPage() {
       grid.innerHTML = '<p class="loading-msg">Nie udało się połączyć z serwerem produktów. Uruchom go poleceniem <code>npm start</code> w folderze <code>server/</code>.</p>';
       filterList.innerHTML = '<li><a href="#" class="active">Wszystkie produkty</a></li>';
     });
+}
+
+// Ranking trafności identyczny z tym po stronie API (server/db/products.js)
+// — używany tu, by przełączanie kategorii nie wymagało ponownego zapytania.
+function relevanceScore(product, needle) {
+  const name = product.name.toLowerCase();
+  const desc = (product.description || '').toLowerCase();
+  const catName = (CATEGORY_NAMES[product.category] || '').toLowerCase();
+
+  let score = 0;
+  if (name === needle) score += 100;
+  else if (name.startsWith(needle)) score += 60;
+  else if (name.includes(needle)) score += 40;
+
+  if (desc.includes(needle)) score += 15;
+  if (catName.includes(needle)) score += 10;
+
+  const words = needle.split(/\s+/).filter(Boolean);
+  if (words.length > 1 && words.every((w) => name.includes(w))) score += 20;
+
+  return score;
 }
 
 function stockLine(stock) {

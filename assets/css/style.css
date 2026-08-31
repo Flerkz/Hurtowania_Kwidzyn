@@ -93,7 +93,7 @@ header.site-header{ background:#fff; position:sticky; top:0; z-index:50; box-sha
 .logo .dot{ width:12px; height:12px; border-radius:50%; background: var(--orange); }
 .logo small{ display:block; font-size:11px; font-weight:600; color: var(--gray); letter-spacing:.03em; }
 
-.search-form{ flex:1; max-width:480px; display:flex; }
+.search-form{ flex:1; max-width:480px; display:flex; position:relative; }
 .search-form input{
   flex:1; border:2px solid var(--border); border-right:none; border-radius: var(--radius-pill) 0 0 var(--radius-pill);
   padding:12px 20px; font-family:inherit; font-size:14px; outline:none;
@@ -104,6 +104,24 @@ header.site-header{ background:#fff; position:sticky; top:0; z-index:50; box-sha
   border-radius: 0 var(--radius-pill) var(--radius-pill) 0; cursor:pointer; font-size:16px;
 }
 
+/* Podpowiedzi wyszukiwania */
+.search-suggest{
+  display:none; position:absolute; top:calc(100% + 10px); left:0; right:0; background:#fff;
+  border:1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
+  max-height:420px; overflow-y:auto; z-index:60; text-align:left;
+}
+.search-suggest.is-open{ display:block; }
+.search-item{ display:flex; gap:12px; align-items:center; padding:12px 14px; border-bottom:1px solid var(--border); }
+.search-item:hover{ background: var(--mint); }
+.search-item img{ width:46px; height:46px; object-fit:cover; border-radius:8px; flex-shrink:0; background: var(--mint-2); }
+.search-item-info{ min-width:0; }
+.search-item-info strong{ display:block; font-size:13.5px; color: var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.search-item-info p{ font-size:12px; color: var(--gray); margin:2px 0 3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.search-item-info .search-item-price{ font-size:12.5px; font-weight:800; color: var(--green-darker); }
+.search-empty{ padding:18px 14px; font-size:13px; color: var(--gray); text-align:center; }
+.search-view-all{ display:block; text-align:center; padding:12px; font-size:13px; font-weight:700; color: var(--green); }
+.search-view-all:hover{ background: var(--mint); }
+
 .header-actions{ display:flex; align-items:center; gap:18px; margin-left:auto; }
 .header-actions .icon-link{ display:flex; flex-direction:column; align-items:center; font-size:11px; color:var(--ink-soft); font-weight:600; gap:4px; }
 .header-actions .icon-link .badge{ position:relative; }
@@ -113,7 +131,9 @@ header.site-header{ background:#fff; position:sticky; top:0; z-index:50; box-sha
 }
 
 nav.category-nav{ background: var(--mint); border-top:1px solid var(--border); }
-nav.category-nav .container{ display:flex; gap:6px; padding:0 24px; overflow-x:auto; }
+nav.category-nav .container{ display:flex; gap:6px; padding:0 24px; overflow-x:auto; scrollbar-width:thin; }
+nav.category-nav .container::-webkit-scrollbar{ height:4px; }
+nav.category-nav .container::-webkit-scrollbar-thumb{ background: var(--border); border-radius:4px; }
 nav.category-nav a{
   padding:13px 16px; font-size:14px; font-weight:600; color: var(--green-darker); white-space:nowrap;
   border-bottom:3px solid transparent;
@@ -255,6 +275,20 @@ footer.site-footer{ background: var(--green-darker); color:#c8ddce; padding:70px
 .product-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:22px; }
 .product-card{ background:#fff; border:1px solid var(--border); border-radius: var(--radius-lg); overflow:hidden; transition: box-shadow .2s ease, transform .2s ease; }
 .product-card:hover{ box-shadow: var(--shadow-md); transform: translateY(-4px); }
+.product-card.is-highlighted{ border-color: var(--orange); animation: highlight-pulse 1.8s ease; }
+@keyframes highlight-pulse {
+  0%{ box-shadow: 0 0 0 0 rgba(255,153,0,.5); }
+  70%{ box-shadow: 0 0 0 16px rgba(255,153,0,0); }
+  100%{ box-shadow: 0 0 0 0 rgba(255,153,0,0); }
+}
+
+.search-results-bar{
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  background: var(--mint); border-radius: var(--radius-md); padding:14px 18px; margin-bottom:22px; font-size:14px;
+}
+.search-results-bar strong{ color: var(--green-darker); }
+.search-results-bar a{ color: var(--green); font-weight:700; font-size:13px; }
+.search-results-bar a:hover{ text-decoration:underline; }
 .product-card .thumb{ aspect-ratio: 1/0.85; overflow:hidden; }
 .product-card .thumb img{ width:100%; height:100%; object-fit:cover; }
 .product-card .info{ padding:18px; }
@@ -399,7 +433,7 @@ nav.category-nav a:hover{ transform: translateY(-1px); }
 .compare-table tbody tr:hover{ background: var(--mint); }
 .compare-table tbody tr:hover td.us{ background: var(--mint-2); }
 
-.filters li a{ transition: color .2s ease, transform .2s ease; display:inline-flex; }
+.filters li a{ transition: color .2s ease, transform .2s ease; }
 .filters li a:hover{ transform: translateX(4px); }
 
 .footer-social a{ transition: background .2s ease, color .2s ease, transform .2s ease; }
@@ -513,11 +547,31 @@ nav.category-nav a:hover{ transform: translateY(-1px); }
   .trust-strip .container{ grid-template-columns: repeat(2,1fr); }
   .cart-layout .container, .checkout-layout .container{ grid-template-columns:1fr; }
   .payment-methods{ grid-template-columns:1fr; }
+  /* Te elementy przestają stać obok wysokiej kolumny sąsiada, więc sticky
+     zaczyna zasłaniać treść pod sobą — wyłączamy je, gdy layout zwija się
+     do jednej kolumny. */
+  .filters, .cart-summary, .order-summary{ position:static; }
 }
 @media (max-width: 640px){
   .topbar-left{ display:none; }
   .search-form{ order:3; max-width:none; width:100%; }
-  .header-main{ flex-wrap:wrap; }
+  .header-main{ flex-wrap:wrap; row-gap:10px; }
+
+  /* Nagłówek na telefonie: bez tego pasek ikon + wyszukiwarka + zakładki
+     kategorii zajmowały ponad połowę ekranu i sticky-header zasłaniał
+     treść strony. Zwijamy etykiety do samych ikon i chowamy najmniej
+     istotną pozycję (Punkty odbioru — dostępne też w stopce/kontakcie). */
+  .header-actions{ gap:18px; }
+  .header-actions a[href="kontakt.html"].icon-link{ display:none; }
+  .header-actions .icon-link{ font-size:20px; }
+  .header-actions .icon-link .label-text,
+  .header-actions .icon-link #account-label{ display:none; }
+  .header-actions .icon-link .count{ font-size:10px; }
+  .header-main{ padding:12px 16px; gap:14px; }
+  .search-form input{ padding:10px 16px; font-size:13px; }
+  nav.category-nav .container{ padding:0 16px; }
+  nav.category-nav a{ padding:11px 12px; font-size:13px; }
+
   .cat-grid, .value-grid, .t-grid, .product-grid, .timeline-grid, .team-grid{ grid-template-columns:1fr; }
   .form-row{ grid-template-columns:1fr; }
   .footer-grid{ grid-template-columns:1fr; }
@@ -526,6 +580,17 @@ nav.category-nav a:hover{ transform: translateY(-1px); }
   .cart-item{ grid-template-columns: 64px 1fr; }
   .cart-item .line-total{ text-align:left; }
   .card-fields{ grid-template-columns:1fr; }
+
+  /* Karta ze statystyką w hero: na desktopie nachodzi na zdjęcie z ujemnym
+     marginesem — na wąskim ekranie to się nie mieści, więc zamiast nachodzić
+     stawiamy ją zwykłym blokiem pod zdjęciem. */
+  .hero-media{ display:flex; flex-direction:column; gap:16px; }
+  .hero-media .float-card{ position:static; max-width:none; box-shadow: var(--shadow-sm); }
+
+  /* Większe pola dotykowe */
+  .qty-stepper button{ width:38px; height:38px; }
+  .qty-stepper span{ width:38px; }
+  .product-card .add-btn{ width:40px; height:40px; }
 }
 @media (prefers-reduced-motion: reduce){
   .reveal, .reveal-stagger > *{ opacity:1; transform:none; transition:none; }

@@ -9,7 +9,7 @@ const router = express.Router();
  * /products:
  *   get:
  *     summary: Lista produktów
- *     description: Zwraca wszystkie produkty, opcjonalnie przefiltrowane po kategorii.
+ *     description: Zwraca produkty, opcjonalnie przefiltrowane po kategorii i/lub posortowane wg trafności dopasowania do frazy `q` (nazwa, opis, kategoria).
  *     tags: [Produkty]
  *     parameters:
  *       - in: query
@@ -17,6 +17,11 @@ const router = express.Router();
  *         schema:
  *           type: string
  *         description: Slug kategorii (np. kubki, pudelka, eko, czystosc, cukiernia)
+ *       - in: query
+ *         name: q
+ *         schema:
+ *           type: string
+ *         description: Fraza wyszukiwania — wyniki posortowane od najbardziej trafnych
  *     responses:
  *       200:
  *         description: Lista produktów
@@ -28,8 +33,8 @@ const router = express.Router();
  *                 $ref: '#/components/schemas/Product'
  */
 router.get('/products', (req, res) => {
-  const { category } = req.query;
-  res.json(db.getAllProducts({ category }));
+  const { category, q } = req.query;
+  res.json(db.getAllProducts({ category, q }));
 });
 
 /**

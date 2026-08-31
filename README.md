@@ -117,7 +117,7 @@ operatorem płatności; status zamówienia jest symulowany.** Podłączenie real
 |---|---|---|
 | POST | `/api/auth/login` | Logowanie — zwraca token JWT |
 | GET | `/api/auth/me` | Dane zalogowanego użytkownika (wymaga tokenu) |
-| GET | `/api/products` | Lista produktów (opcjonalnie `?category=kubki`) |
+| GET | `/api/products` | Lista produktów (opcjonalnie `?category=kubki`, `?q=fraza` — wyniki posortowane wg trafności) |
 | GET | `/api/products/:id` | Pojedynczy produkt |
 | POST | `/api/products` | Dodanie produktu — **tylko admin** |
 | PUT | `/api/products/:id` | Edycja produktu — **tylko admin** |
@@ -127,3 +127,11 @@ operatorem płatności; status zamówienia jest symulowany.** Podłączenie real
 | GET | `/api/orders/:id` | Szczegóły zamówienia |
 
 Interaktywna dokumentacja (Swagger UI) ze wszystkimi endpointami: **http://localhost:8123/api-docs**
+
+## Wyszukiwanie
+
+Pasek wyszukiwania w nagłówku (na każdej stronie) pokazuje na żywo najtrafniejsze produkty wraz ze zdjęciem,
+opisem i ceną (debounce 250 ms, `GET /api/products?q=`). Kliknięcie podpowiedzi lub Enter przenosi do
+[produkty.html](produkty.html), gdzie wyniki są dodatkowo filtrowalne po kategorii, a trafiony produkt zostaje
+przewinięty w widok i podświetlony. Ranking trafności (`server/db/products.js`) wagowo faworyzuje dopasowania
+w nazwie nad opisem i kategorią — miejsce docelowo podmieniane na `ts_rank` przy podłączeniu prawdziwej bazy.

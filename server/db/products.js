@@ -34,8 +34,42 @@ function getCategories() {
   return categories;
 }
 
-function getAllProducts({ category } = {}) {
-  return category ? products.filter((p) => p.category === category) : products;
+// Prosty ranking trafności dopasowania frazy do produktu — nazwa waży
+// najwięcej, potem opis, potem kategoria. Przy podłączeniu prawdziwej bazy
+// danych to miejsce, w którym docelowo stanie zapytanie do silnika
+// pełnotekstowego (np. PostgreSQL tsvector / ts_rank).
+function relevanceScore(product, needle) {
+  const name = product.name.toLowerCase();
+  const desc = (product.description || '').toLowerCase();
+  const catName = (categories.find((c) => c.slug === product.category)?.name || '').toLowerCase();
+
+  let score = 0;
+  if (name === needle) score += 100;
+  else if (name.startsWith(needle)) score += 60;
+  else if (name.includes(needle)) score += 40;
+
+  if (desc.includes(needle)) score += 15;
+  if (catName.includes(needle)) score += 10;
+
+  const words = needle.split(/\s+/).filter(Boolean);
+  if (words.length > 1 && words.every((w) => name.includes(w))) score += 20;
+
+  return score;
+}
+
+function getAllProducts({ category, q } = {}) {
+  let results = category ? products.filter((p) => p.category === category) : products.slice();
+
+  const needle = (q || '').trim().toLowerCase();
+  if (needle) {
+    results = results
+      .map((p) => ({ product: p, score: relevanceScore(p, needle) }))
+      .filter((r) => r.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map((r) => r.product);
+  }
+
+  return results;
 }
 
 function getProductById(id) {
