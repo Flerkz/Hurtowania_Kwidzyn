@@ -19,11 +19,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const userInfo = document.getElementById('admin-user-info');
   if (userInfo) userInfo.textContent = `Zalogowano jako ${user.name} (${user.email})`;
 
+  const formWrap = document.getElementById('product-form-wrap');
   const form = document.getElementById('product-form');
   const formTitle = document.getElementById('form-title');
   const errorEl = document.getElementById('admin-error');
   const newBtn = document.getElementById('new-product-btn');
   const cancelBtn = document.getElementById('cancel-form-btn');
+
+  const fields = {
+    name: document.getElementById('p-name'),
+    category: document.getElementById('p-category'),
+    image: document.getElementById('p-image'),
+    description: document.getElementById('p-description'),
+    price: document.getElementById('p-price'),
+    stock: document.getElementById('p-stock'),
+    badge: document.getElementById('p-badge'),
+  };
+
+  const preview = {
+    img: document.getElementById('preview-img'),
+    cat: document.getElementById('preview-cat'),
+    name: document.getElementById('preview-name'),
+    desc: document.getElementById('preview-desc'),
+    stock: document.getElementById('preview-stock'),
+    price: document.getElementById('preview-price'),
+    ribbon: document.getElementById('preview-ribbon'),
+  };
 
   const CATEGORY_NAMES = {
     kubki: 'Kubki i naczynia',
@@ -44,13 +65,19 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTable();
       })
       .catch(() => {
-        tbody.innerHTML = '<tr><td colspan="6" class="loading-msg">Nie udało się pobrać produktów.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="loading-msg">Nie udało się pobrać produktów.</td></tr>';
       });
+  }
+
+  function stockCellClass(stock) {
+    if (stock === 0) return 'out';
+    if (stock <= 10) return 'low';
+    return 'ok';
   }
 
   function renderTable() {
     if (!products.length) {
-      tbody.innerHTML = '<tr><td colspan="6" class="loading-msg">Brak produktów.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7" class="loading-msg">Brak produktów.</td></tr>';
       return;
     }
     tbody.innerHTML = products.map((p) => `
@@ -59,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${escapeHtml(p.name)}</td>
         <td>${CATEGORY_NAMES[p.category] || p.category}</td>
         <td>${p.price.toFixed(2).replace('.', ',')} zł</td>
+        <td class="stock-cell ${stockCellClass(p.stock ?? 0)}">${p.stock ?? '—'}</td>
         <td>${p.badge ? BADGE_LABELS[p.badge] : '—'}</td>
         <td>
           <div class="row-actions">
@@ -70,27 +98,73 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
+  function updatePreview() {
+    const name = fields.name.value.trim();
+    const category = fields.category.value;
+    const image = fields.image.value.trim();
+    const description = fields.description.value.trim();
+    const price = parseFloat(fields.price.value) || 0;
+    const stock = fields.stock.value === '' ? null : parseInt(fields.stock.value, 10);
+    const badge = fields.badge.value;
+
+    preview.img.src = image;
+    preview.cat.textContent = CATEGORY_NAMES[category] || category;
+    preview.name.textContent = name;
+    preview.desc.textContent = description || 'Opis pojawi się tutaj…';
+    preview.price.textContent = `${price.toFixed(2).replace('.', ',')} zł`;
+
+    if (stock === null || Number.isNaN(stock)) {
+      preview.stock.textContent = 'Podaj stan magazynowy';
+      preview.stock.className = 'stock-line';
+    } else if (stock === 0) {
+      preview.stock.textContent = 'Wyprzedane';
+      preview.stock.className = 'stock-line out';
+    } else if (stock <= 10) {
+      preview.stock.textContent = `Zostały ostatnie ${stock} szt.!`;
+      preview.stock.className = 'stock-line low';
+    } else {
+      preview.stock.textContent = `Dostępne — ${stock} szt. w magazynie`;
+      preview.stock.className = 'stock-line ok';
+    }
+
+    if (badge) {
+      preview.ribbon.style.display = '';
+      preview.ribbon.className = `ribbon ribbon-${badge}`;
+      preview.ribbon.textContent = BADGE_LABELS[badge] || '';
+    } else {
+      preview.ribbon.style.display = 'none';
+    }
+  }
+
+  Object.values(fields).forEach((el) => {
+    el.addEventListener('input', updatePreview);
+    el.addEventListener('change', updatePreview);
+  });
+
   function showForm(product) {
     errorEl.style.display = 'none';
-    form.style.display = 'block';
+    formWrap.style.display = 'block';
     if (product) {
       formTitle.innerHTML = '<span class="step-num">✎</span> Edytuj produkt';
       document.getElementById('product-id').value = product.id;
-      document.getElementById('p-name').value = product.name;
-      document.getElementById('p-category').value = product.category;
-      document.getElementById('p-price').value = product.price;
-      document.getElementById('p-badge').value = product.badge || '';
-      document.getElementById('p-image').value = product.image;
+      fields.name.value = product.name;
+      fields.category.value = product.category;
+      fields.image.value = product.image;
+      fields.description.value = product.description || '';
+      fields.price.value = product.price;
+      fields.stock.value = product.stock ?? 0;
+      fields.badge.value = product.badge || '';
     } else {
       formTitle.innerHTML = '<span class="step-num">+</span> Nowy produkt';
       form.reset();
       document.getElementById('product-id').value = '';
     }
-    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    updatePreview();
+    formWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function hideForm() {
-    form.style.display = 'none';
+    formWrap.style.display = 'none';
     form.reset();
   }
 
@@ -127,11 +201,13 @@ document.addEventListener('DOMContentLoaded', () => {
     errorEl.style.display = 'none';
     const id = document.getElementById('product-id').value;
     const payload = {
-      name: document.getElementById('p-name').value,
-      category: document.getElementById('p-category').value,
-      price: Number(document.getElementById('p-price').value),
-      image: document.getElementById('p-image').value,
-      badge: document.getElementById('p-badge').value || undefined,
+      name: fields.name.value,
+      category: fields.category.value,
+      image: fields.image.value,
+      description: fields.description.value,
+      price: Number(fields.price.value),
+      stock: Number(fields.stock.value),
+      badge: fields.badge.value || undefined,
     };
     const url = id ? `/api/products/${id}` : '/api/products';
     const method = id ? 'PUT' : 'POST';

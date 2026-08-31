@@ -77,11 +77,13 @@ router.get('/products/:id', (req, res) => {
  *         application/json:
  *           schema:
  *             type: object
- *             required: [name, category, price, image]
+ *             required: [name, category, price, image, stock]
  *             properties:
  *               name: { type: string }
  *               category: { type: string }
+ *               description: { type: string }
  *               price: { type: number }
+ *               stock: { type: integer, description: 'Ile sztuk zostało w magazynie' }
  *               image: { type: string }
  *               badge: { type: string, enum: [new, promo] }
  *     responses:
@@ -91,11 +93,11 @@ router.get('/products/:id', (req, res) => {
  *       403: { description: Wymagane uprawnienia administratora }
  */
 router.post('/products', requireAuth, requireAdmin, (req, res) => {
-  const { name, category, price, image, badge } = req.body || {};
-  if (!name || !category || price == null || !image) {
-    return res.status(400).json({ error: 'Brak wymaganych pól: name, category, price, image' });
+  const { name, category, description, price, stock, image, badge } = req.body || {};
+  if (!name || !category || price == null || !image || stock == null) {
+    return res.status(400).json({ error: 'Brak wymaganych pól: name, category, price, stock, image' });
   }
-  const product = db.addProduct({ name, category, price, image, badge });
+  const product = db.addProduct({ name, category, description, price, stock, image, badge });
   res.status(201).json(product);
 });
 
@@ -120,7 +122,9 @@ router.post('/products', requireAuth, requireAdmin, (req, res) => {
  *             properties:
  *               name: { type: string }
  *               category: { type: string }
+ *               description: { type: string }
  *               price: { type: number }
+ *               stock: { type: integer }
  *               image: { type: string }
  *               badge: { type: string, enum: [new, promo] }
  *     responses:

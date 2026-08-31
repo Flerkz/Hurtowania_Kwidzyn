@@ -160,9 +160,11 @@ function initProductsPage() {
         <div class="info">
           <span class="cat-label">${CATEGORY_NAMES[p.category] || p.category}</span>
           <h3>${escapeHtml(p.name)}</h3>
+          ${p.description ? `<p class="product-desc">${escapeHtml(p.description)}</p>` : ''}
+          ${stockLine(p.stock)}
           <div class="price-row">
             <span class="price">${p.price.toFixed(2).replace('.', ',')} zł</span>
-            <button class="add-btn" data-id="${p.id}" aria-label="Dodaj do koszyka">+</button>
+            <button class="add-btn" data-id="${p.id}" aria-label="Dodaj do koszyka" ${p.stock === 0 ? 'disabled' : ''}>+</button>
           </div>
         </div>
       </article>
@@ -212,7 +214,7 @@ function initProductsPage() {
 
   grid.addEventListener('click', (e) => {
     const btn = e.target.closest('.add-btn');
-    if (!btn) return;
+    if (!btn || btn.disabled) return;
     const product = allProducts.find((p) => p.id === Number(btn.dataset.id));
     if (!product || typeof PakoCart === 'undefined') return;
     PakoCart.addItem(product, 1);
@@ -237,6 +239,13 @@ function initProductsPage() {
       grid.innerHTML = '<p class="loading-msg">Nie udało się połączyć z serwerem produktów. Uruchom go poleceniem <code>npm start</code> w folderze <code>server/</code>.</p>';
       filterList.innerHTML = '<li><a href="#" class="active">Wszystkie produkty</a></li>';
     });
+}
+
+function stockLine(stock) {
+  if (stock == null) return '';
+  if (stock === 0) return '<p class="stock-line out">Wyprzedane</p>';
+  if (stock <= 10) return `<p class="stock-line low">Zostały ostatnie ${stock} szt.!</p>`;
+  return `<p class="stock-line ok">Dostępne — ${stock} szt. w magazynie</p>`;
 }
 
 function escapeHtml(str) {

@@ -65,57 +65,87 @@
       <button type="button" class="btn btn-primary" id="new-product-btn">+ Dodaj produkt</button>
     </div>
 
-    <form id="product-form" class="checkout-section" style="display:none;">
-      <h3 id="form-title"><span class="step-num">+</span> Nowy produkt</h3>
-      <input type="hidden" id="product-id">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="p-name">Nazwa</label>
-          <input id="p-name" required>
-        </div>
-        <div class="form-group">
-          <label for="p-category">Kategoria</label>
-          <select id="p-category" required>
-            <option value="kubki">Kubki i naczynia</option>
-            <option value="pudelka">Pudełka gastronomiczne</option>
-            <option value="eko">Opakowania ekologiczne</option>
-            <option value="czystosc">Środki czystości</option>
-            <option value="cukiernia">Cukiernia</option>
-          </select>
-        </div>
+    <div id="product-form-wrap" style="display:none;">
+      <div class="product-form-grid">
+        <form id="product-form">
+          <h3 id="form-title"><span class="step-num">+</span> Nowy produkt</h3>
+          <input type="hidden" id="product-id">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="p-name">Nazwa</label>
+              <input id="p-name" required>
+            </div>
+            <div class="form-group">
+              <label for="p-category">Kategoria</label>
+              <select id="p-category" required>
+                <option value="kubki">Kubki i naczynia</option>
+                <option value="pudelka">Pudełka gastronomiczne</option>
+                <option value="eko">Opakowania ekologiczne</option>
+                <option value="czystosc">Środki czystości</option>
+                <option value="cukiernia">Cukiernia</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label for="p-image">Zdjęcie (URL)</label>
+            <input id="p-image" type="url" required placeholder="https://images.unsplash.com/...">
+          </div>
+          <div class="form-group full">
+            <label for="p-description">Opis</label>
+            <textarea id="p-description" rows="3" placeholder="Krótki opis produktu…"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="p-price">Cena (zł)</label>
+              <input id="p-price" type="number" step="0.01" min="0" required>
+            </div>
+            <div class="form-group">
+              <label for="p-stock">Ile zostało (szt.)</label>
+              <input id="p-stock" type="number" step="1" min="0" required>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label for="p-badge">Etykieta</label>
+            <select id="p-badge">
+              <option value="">Brak</option>
+              <option value="new">Nowość</option>
+              <option value="promo">Promocja</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:18px;">
+            <button type="submit" class="btn btn-primary">Zapisz</button>
+            <button type="button" class="btn btn-outline" id="cancel-form-btn">Anuluj</button>
+          </div>
+          <p id="admin-error" style="display:none;color:#c85a3a;font-size:13px;margin-top:14px;"></p>
+        </form>
+
+        <aside class="product-preview">
+          <span class="preview-label">Podgląd na żywo</span>
+          <article class="product-card" id="preview-card">
+            <span class="ribbon ribbon-new" id="preview-ribbon" style="display:none;"></span>
+            <div class="thumb"><img id="preview-img" src="" alt=""></div>
+            <div class="info">
+              <span class="cat-label" id="preview-cat">Kategoria</span>
+              <h3 id="preview-name">Nazwa produktu</h3>
+              <p class="product-desc" id="preview-desc">Opis pojawi się tutaj…</p>
+              <p class="stock-line ok" id="preview-stock">Dostępne — 0 szt. w magazynie</p>
+              <div class="price-row">
+                <span class="price" id="preview-price">0,00 zł</span>
+                <span class="add-btn" aria-hidden="true" style="pointer-events:none;">+</span>
+              </div>
+            </div>
+          </article>
+        </aside>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="p-price">Cena (zł)</label>
-          <input id="p-price" type="number" step="0.01" min="0" required>
-        </div>
-        <div class="form-group">
-          <label for="p-badge">Etykieta</label>
-          <select id="p-badge">
-            <option value="">Brak</option>
-            <option value="new">Nowość</option>
-            <option value="promo">Promocja</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group full">
-        <label for="p-image">URL obrazu</label>
-        <input id="p-image" type="url" required placeholder="https://images.unsplash.com/...">
-      </div>
-      <div style="display:flex;gap:12px;margin-top:18px;">
-        <button type="submit" class="btn btn-primary">Zapisz</button>
-        <button type="button" class="btn btn-outline" id="cancel-form-btn">Anuluj</button>
-      </div>
-      <p id="admin-error" style="display:none;color:#c85a3a;font-size:13px;margin-top:14px;"></p>
-    </form>
+    </div>
 
     <div class="admin-table-wrap">
       <table class="admin-table" id="admin-table">
         <thead>
-          <tr><th></th><th>Nazwa</th><th>Kategoria</th><th>Cena</th><th>Etykieta</th><th></th></tr>
+          <tr><th></th><th>Nazwa</th><th>Kategoria</th><th>Cena</th><th>Stan</th><th>Etykieta</th><th></th></tr>
         </thead>
         <tbody id="admin-table-body">
-          <tr><td colspan="6" class="loading-msg">Ładowanie…</td></tr>
+          <tr><td colspan="7" class="loading-msg">Ładowanie…</td></tr>
         </tbody>
       </table>
     </div>

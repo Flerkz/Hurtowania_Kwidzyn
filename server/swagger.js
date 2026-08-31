@@ -20,8 +20,11 @@ const swaggerSpec = swaggerJsdoc({
             id: { type: 'integer', example: 1 },
             category: { type: 'string', example: 'kubki' },
             name: { type: 'string', example: 'Kubki papierowe do kawy 250 ml (50 szt.)' },
+            description: { type: 'string', example: 'Jednorazowe kubki papierowe z podwójną powłoką.' },
             price: { type: 'number', format: 'float', example: 24.9 },
+            stock: { type: 'integer', example: 340, description: 'Ile sztuk zostało w magazynie' },
             image: { type: 'string', example: 'https://images.unsplash.com/photo-...' },
+            badge: { type: 'string', enum: ['new', 'promo'] },
           },
         },
         Category: {

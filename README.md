@@ -2,6 +2,16 @@
 
 Strona firmowa (statyczny front + małe API produktów) dla firmy oferującej opakowania jednorazowe dla gastronomii.
 
+## Konta demonstracyjne (logowanie)
+
+| Rola | E-mail | Hasło | Uprawnienia |
+|---|---|---|---|
+| **admin** | `admin@pakodirect.pl` | `Admin123!` | To samo co konto zwykłe **+ dodawanie, edycja i usuwanie produktów** w [panel.html](panel.html) |
+| **customer** (zwykłe) | `klient@pakodirect.pl` | `Klient123!` | Przeglądanie, koszyk, checkout — praktycznie to samo co gość, tylko zalogowany (imię w nagłówku) |
+
+Logowanie nie jest wymagane do zakupów — koszyk i płatność działają też dla niezalogowanego gościa.
+Zwykłe konto nie ma dostępu do panelu admina (próba wejścia na `panel.html` przekierowuje na stronę główną).
+
 ## Wymagania
 
 - **Docker Desktop** (najprostsza opcja) — albo
@@ -76,17 +86,13 @@ Dockerfile, docker-compose.yml                         — konteneryzacja (web +
 
 ## Logowanie i panel admina
 
-Logowanie zwraca token JWT (ważny 8h), trzymany w `localStorage` po stronie klienta. Role: `admin` i `customer`.
-
-Konta demonstracyjne (zdefiniowane w [server/db/users.js](server/db/users.js)):
-
-| Rola | E-mail | Hasło |
-|---|---|---|
-| admin | `admin@pakodirect.pl` | `Admin123!` |
-| customer | `klient@pakodirect.pl` | `Klient123!` |
+Logowanie zwraca token JWT (ważny 8h), trzymany w `localStorage` po stronie klienta. Role: `admin` i `customer`
+(konta demo — patrz tabela na górze pliku, zdefiniowane w [server/db/users.js](server/db/users.js)).
 
 Po zalogowaniu jako **admin** w nagłówku pojawia się link „Panel admina” → [panel.html](panel.html), gdzie
-można dodawać, edytować i usuwać produkty (widoczne od razu w sklepie). Zapisujące endpointy API
+można dodawać i edytować produkty przez formularz z **podglądem karty produktu na żywo** (aktualizuje się
+przy każdej zmianie pola: zdjęcie, nazwa, kategoria, opis, cena, ile zostało w magazynie, etykieta) oraz
+usuwać istniejące — zmiany widoczne są od razu w sklepie. Zapisujące endpointy API
 (`POST/PUT/DELETE /api/products`) wymagają tokenu z rolą `admin` (401 bez tokenu, 403 dla roli `customer`).
 
 **To środowisko demonstracyjne** — hasła są zaszyte w kodzie (bcrypt) wyłącznie do celów prezentacji,
