@@ -3,44 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>O nas — PakoDirect</title>
-<meta name="description" content="Poznaj PakoDirect — producenta opakowań jednorazowych dla gastronomii działającego od 2011 roku. Nasza historia, wartości i zespół.">
+<title>O nas — MAXI Hurtownia Kwidzyn</title>
+<meta name="description" content="MAXI Hurtownia Kwidzyn — lokalny dostawca opakowań jednorazowych i środków czystości dla gastronomii, sklepów i firm.">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-left">
+      <a href="tel:+48000000000">📞 000 000 000</a>
+      <a href="mailto:kontakt@example.com">✉️ kontakt@example.com</a>
+    </div>
+    <div class="topbar-right">
+      <span>📍 ul. Przykładowa 1, 82-500 Kwidzyn · Pon–Pt: 8:00–16:00</span>
+    </div>
+  </div>
+</div>
+
 <header class="site-header">
+  <div class="brand-stripe"></div>
   <div class="header-main container">
-    <a href="index.html" class="logo">
-      <span class="dot"></span>
-      PakoDirect
-      <small style="margin-left:2px;font-weight:500;">Opakowania dla gastronomii</small>
+    <a href="index.html" class="logo" aria-label="MAXI Hurtownia Kwidzyn — strona główna">
+      <img src="assets/img/logo.png" alt="MAXI Hurtownia Kwidzyn" width="680" height="300">
     </a>
 
-    <form class="search-form" role="search">
-      <input type="text" placeholder="Czego szukasz? np. kubki papierowe 250ml" aria-label="Szukaj produktów">
+    <form class="search-form" role="search" action="produkty.html" method="get">
+      <input type="search" name="q" placeholder="Czego szukasz? np. kubki papierowe" aria-label="Szukaj produktów">
       <button type="submit" aria-label="Szukaj">🔍</button>
     </form>
 
     <div class="header-actions">
-      <a class="icon-link" href="kontakt.html"><span>📍</span>Punkty odbioru</a>
-      <a class="icon-link" href="kontakt.html"><span>👤</span>Moje konto</a>
-      <a class="icon-link" href="produkty.html">
-        <span class="badge">🛒<span class="count">3</span></span>
-        Koszyk
-      </a>
+      <a class="header-phone" href="tel:+48000000000">Zadzwoń do nas<strong>000 000 000</strong></a>
+      <a class="btn btn-primary btn-sm" href="kontakt.html">Zapytaj o ofertę</a>
       <button class="mobile-toggle" aria-label="Menu">☰</button>
     </div>
   </div>
 
   <nav class="category-nav main-nav">
     <div class="container">
-      <a href="produkty.html?cat=kubki">Kubki i Naczynia</a>
-      <a href="produkty.html?cat=pudelka">Pudełka Gastronomiczne</a>
-      <a href="produkty.html?cat=eko">Opakowania Ekologiczne</a>
-      <a href="produkty.html?cat=czystosc">Środki Czystości</a>
+      <a href="produkty.html">Wszystkie produkty</a>
+      <a href="produkty.html?cat=kubki">Kubki i naczynia</a>
+      <a href="produkty.html?cat=pudelka">Pudełka gastronomiczne</a>
+      <a href="produkty.html?cat=eko">Opakowania ekologiczne</a>
+      <a href="produkty.html?cat=czystosc">Środki czystości</a>
       <a href="produkty.html?cat=cukiernia">Cukiernia</a>
-      <a href="produkty.html?cat=sklep">Artykuły dla Sklepów</a>
       <a href="o-nas.html">O nas</a>
       <a href="kontakt.html">Kontakt</a>
     </div>
@@ -57,73 +65,36 @@
 <section class="about-block">
   <div class="container">
     <div>
-      <span class="eyebrow">Nasza historia</span>
-      <h2>Zaczęliśmy od jednej maszyny do formowania tacek</h2>
-      <p>PakoDirect powstał w 2011 roku w Gdańsku jako niewielka drukarnia opakowań papierowych. Dziś jesteśmy jednym z wiodących producentów opakowań jednorazowych dla gastronomii w Polsce, obsługującym ponad tysiąc restauracji, kawiarni i firm cateringowych.</p>
-      <p>Specjalizujemy się w druku offsetowym na papierze, kartonie i folii, a naszą wiedzą o nowych technologiach pakowania chętnie dzielimy się z klientami — od jednoosobowych działalności po duże sieci gastronomiczne.</p>
+      <span class="eyebrow">Hurtownia w Kwidzynie</span>
+      <h2>Lokalny dostawca dla gastronomii, sklepów i firm</h2>
+      <p>MAXI Hurtownia Kwidzyn to miejsce, w którym zaopatrzysz swój lokal w opakowania jednorazowe, naczynia, artykuły cukiernicze i środki czystości — w cenach hurtowych i bez zbędnych formalności.</p>
+      <p>Pomagamy dobrać opakowania do rodzaju działalności: od kubków na kawę i pudełek na dania na wynos, po pudełka na torty i chemię do utrzymania czystości.</p>
     </div>
-    <img src="https://images.unsplash.com/photo-1717386255773-1e3037c81788?auto=format&fit=crop&w=800&q=80" alt="Hala produkcyjna PakoDirect">
+    <img src="https://images.unsplash.com/photo-1597974828431-9078248d8cc9?auto=format&fit=crop&w=800&q=80" alt="Pudełka i opakowania gastronomiczne">
   </div>
 </section>
 
-<section class="timeline">
+<section class="value-props">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow" style="justify-content:center;">Kamienie milowe</span>
-      <h2>15 lat rozwoju branży opakowań</h2>
+      <span class="eyebrow">Dla kogo</span>
+      <h2>Komu pomagamy</h2>
     </div>
-    <div class="timeline-grid">
-      <div class="tl-card"><div class="yr">2011</div><p>Start działalności — mała drukarnia opakowań papierowych w Gdańsku</p></div>
-      <div class="tl-card"><div class="yr">2015</div><p>Uruchomienie własnej linii produkcyjnej pojemników plastikowych</p></div>
-      <div class="tl-card"><div class="yr">2020</div><p>Wprowadzenie pełnej linii opakowań biodegradowalnych i kompostowalnych</p></div>
-      <div class="tl-card"><div class="yr">2026</div><p>Ponad 1000 stałych klientów biznesowych i własny magazyn logistyczny</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="about-block alt reverse">
-  <div class="container">
-    <img src="https://images.unsplash.com/photo-1650964336686-7f7be9e35f35?auto=format&fit=crop&w=800&q=80" alt="Odpowiedzialna produkcja opakowań ekologicznych">
-    <div>
-      <span class="eyebrow">Nasze wartości</span>
-      <h2>Jakość, rzetelność i odpowiedzialność</h2>
-      <ul>
-        <li>Wszystkie produkty posiadają atesty i są dopuszczone do kontaktu z żywnością</li>
-        <li>Stale poszerzamy ofertę opakowań ekologicznych i kompostowalnych</li>
-        <li>Sprawna, uprzejma obsługa klienta biznesowego i indywidualnego</li>
-        <li>Konkurencyjne ceny fabryczne dzięki sprzedaży bezpośredniej</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section class="categories" id="zespol">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow" style="justify-content:center;">Ludzie PakoDirect</span>
-      <h2>Poznaj nasz zespół</h2>
-      <p>Osoby, które każdego dnia dbają o jakość produktów i obsługę naszych klientów.</p>
-    </div>
-    <div class="team-grid">
-      <div class="team-card">
-        <img src="https://ui-avatars.com/api/?name=Tomasz+Wisniewski&background=286245&color=fff&size=400&font-size=0.36" alt="Tomasz Wiśniewski">
-        <strong>Tomasz Wiśniewski</strong>
-        <span>Założyciel i Dyrektor Zarządzający</span>
+    <div class="value-grid">
+      <div class="value-card" style="--c:var(--yellow)">
+        <div class="ic">🍽️</div>
+        <h3>Gastronomia i catering</h3>
+        <p>Restauracje, bary, kawiarnie i firmy cateringowe — opakowania na wynos, kubki, naczynia i sztućce.</p>
       </div>
-      <div class="team-card">
-        <img src="https://ui-avatars.com/api/?name=Karolina+Zielinska&background=ff9900&color=12331f&size=400&font-size=0.36" alt="Karolina Zielińska">
-        <strong>Karolina Zielińska</strong>
-        <span>Kierownik Produkcji</span>
+      <div class="value-card" style="--c:var(--red)">
+        <div class="ic">🎂</div>
+        <h3>Cukiernie i piekarnie</h3>
+        <p>Pudełka na torty i ciasta oraz akcesoria do pakowania wypieków.</p>
       </div>
-      <div class="team-card">
-        <img src="https://ui-avatars.com/api/?name=Michal+Kaczmarek&background=286245&color=fff&size=400&font-size=0.36" alt="Michał Kaczmarek">
-        <strong>Michał Kaczmarek</strong>
-        <span>Dział Obsługi Klienta Biznesowego</span>
-      </div>
-      <div class="team-card">
-        <img src="https://ui-avatars.com/api/?name=Ewa+Dabrowska&background=ff9900&color=12331f&size=400&font-size=0.36" alt="Ewa Dąbrowska">
-        <strong>Ewa Dąbrowska</strong>
-        <span>Dział Jakości i Certyfikacji</span>
+      <div class="value-card" style="--c:var(--blue)">
+        <div class="ic">🏪</div>
+        <h3>Sklepy i firmy</h3>
+        <p>Torby, opakowania i środki czystości potrzebne w codziennej pracy.</p>
       </div>
     </div>
   </div>
@@ -132,27 +103,23 @@
 <section class="newsletter">
   <div class="container">
     <div>
-      <h2>Chcesz dołączyć do grona naszych klientów?</h2>
-      <p>Skontaktuj się z nami — przygotujemy ofertę dopasowaną do Twojego lokalu.</p>
+      <h2>Porozmawiajmy o Twoim zamówieniu</h2>
+      <p>Odpowiemy na pytania o asortyment, ceny i dostępność.</p>
     </div>
-    <a href="kontakt.html" class="btn btn-accent">Skontaktuj się</a>
+    <a href="kontakt.html" class="btn btn-accent">Napisz do nas</a>
   </div>
 </section>
 
 <footer class="site-footer">
+  <div class="brand-stripe"></div>
   <div class="container">
     <div class="footer-grid">
       <div class="footer-about">
-        <a href="index.html" class="logo" style="color:#fff;"><span class="dot"></span>PakoDirect</a>
-        <p>Producent i dystrybutor opakowań jednorazowych dla gastronomii. Ceny fabryczne, szybka dostawa, pełne wsparcie dla biznesu.</p>
-        <div class="footer-social">
-          <a href="#" aria-label="Facebook">f</a>
-          <a href="#" aria-label="Instagram">ig</a>
-          <a href="#" aria-label="LinkedIn">in</a>
-        </div>
+        <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="MAXI Hurtownia Kwidzyn" width="680" height="300"></a>
+        <p>Hurtownia opakowań jednorazowych, naczyń, artykułów cukierniczych i środków czystości w Kwidzynie.</p>
       </div>
       <div>
-        <h4>Produkty</h4>
+        <h4>Asortyment</h4>
         <ul>
           <li><a href="produkty.html?cat=kubki">Kubki i naczynia</a></li>
           <li><a href="produkty.html?cat=pudelka">Pudełka gastronomiczne</a></li>
@@ -162,44 +129,27 @@
         </ul>
       </div>
       <div>
-        <h4>Firma</h4>
+        <h4>Hurtownia</h4>
         <ul>
+          <li><a href="index.html">Strona główna</a></li>
+          <li><a href="produkty.html">Katalog produktów</a></li>
           <li><a href="o-nas.html">O nas</a></li>
-          <li><a href="o-nas.html#zespol">Zespół</a></li>
           <li><a href="kontakt.html">Kontakt</a></li>
-          <li><a href="kontakt.html">Dla firm i cateringu</a></li>
         </ul>
       </div>
       <div>
         <h4>Kontakt</h4>
         <ul>
-          <li>📍 ul. Portowa 12, 80-000 Gdańsk</li>
-          <li>📞 <a href="tel:+48583000000">58 300 00 00</a></li>
-          <li>✉️ <a href="mailto:kontakt@pakodirect.pl">kontakt@pakodirect.pl</a></li>
+          <li>📍 ul. Przykładowa 1, 82-500 Kwidzyn</li>
+          <li>📞 <a href="tel:+48000000000">000 000 000</a></li>
+          <li>✉️ <a href="mailto:kontakt@example.com">kontakt@example.com</a></li>
           <li>🕘 Pon–Pt: 8:00–16:00</li>
         </ul>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 PakoDirect. Wszelkie prawa zastrzeżone.</span>
-      <span>Strona demonstracyjna — wzorowana strukturalnie na pakke.com.pl, wizualnie na oxypac.com.au.</span>
-    </div>
+    <div class="footer-bottom">© 2026 MAXI Hurtownia Kwidzyn. Wszelkie prawa zastrzeżone.</div>
   </div>
 </footer>
-
-<div class="topbar">
-  <div class="container">
-    <div class="topbar-left">
-      <a href="tel:+48583000000">📞 58 300 00 00</a>
-      <a href="mailto:kontakt@pakodirect.pl">✉️ kontakt@pakodirect.pl</a>
-      <span>🚚 Darmowa dostawa już od 300 zł netto</span>
-    </div>
-    <div class="topbar-right">
-      <span>Producent na rynku od 2011 r.</span>
-      <a href="kontakt.html">Dla firm i cateringu</a>
-    </div>
-  </div>
-</div>
 
 <script src="assets/js/main.js"></script>
 </body>

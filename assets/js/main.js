@@ -1,8 +1,8 @@
-// PakoDirect — interakcje UI + pobieranie produktów z API
+// MAXI Hurtownia Kwidzyn — interakcje UI + katalog produktów (strona statyczna, bez serwera)
 document.addEventListener('DOMContentLoaded', () => {
   initHeroSlider();
   initMobileMenu();
-  initDemoForms();
+  initMailForms();
   initProductsPage();
   markActiveNavLink();
 });
@@ -28,16 +28,21 @@ function initMobileMenu() {
   toggle.addEventListener('click', () => catNav.classList.toggle('is-open'));
 }
 
-function initDemoForms() {
-  document.querySelectorAll('form[data-demo-form]').forEach((form) => {
+// Formularz kontaktowy nie ma backendu — otwiera program pocztowy z gotową wiadomością.
+function initMailForms() {
+  document.querySelectorAll('form[data-mail-form]').forEach((form) => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const btn = form.querySelector('button[type="submit"]');
-      if (!btn) return;
-      const original = btn.textContent;
-      btn.textContent = 'Dziękujemy!';
-      btn.disabled = true;
-      setTimeout(() => { btn.textContent = original; btn.disabled = false; form.reset(); }, 2500);
+      const val = (id) => (form.querySelector(`#${id}`)?.value || '').trim();
+      const body = [
+        val('message'),
+        '',
+        `Imię i nazwisko: ${val('name')}`,
+        `Firma: ${val('company')}`,
+        `E-mail: ${val('email')}`,
+        `Telefon: ${val('phone')}`,
+      ].join('\n');
+      window.location.href = `mailto:${form.dataset.mailTo}?subject=${encodeURIComponent(val('topic'))}&body=${encodeURIComponent(body)}`;
     });
   });
 }
@@ -70,11 +75,15 @@ function initProductsPage() {
   if (!grid || !filterList) return;
 
   let allProducts = [];
-  let activeCategory = new URLSearchParams(window.location.search).get('cat') || 'all';
+  const params = new URLSearchParams(window.location.search);
+  let activeCategory = params.get('cat') || 'all';
+  const query = (params.get('q') || '').trim().toLowerCase();
+  const searchInput = document.querySelector('.search-form input[name="q"]');
+  if (searchInput) searchInput.value = params.get('q') || '';
 
   function renderGrid(products) {
     if (!products.length) {
-      grid.innerHTML = '<p class="loading-msg">Brak produktów w tej kategorii.</p>';
+      grid.innerHTML = '<p class="loading-msg">Brak produktów spełniających kryteria.</p>';
       return;
     }
     grid.innerHTML = products.map((p) => `
@@ -85,7 +94,6 @@ function initProductsPage() {
           <h3>${escapeHtml(p.name)}</h3>
           <div class="price-row">
             <span class="price">${p.price.toFixed(2).replace('.', ',')} zł</span>
-            <button class="add-btn" aria-label="Dodaj do koszyka">+</button>
           </div>
         </div>
       </article>
@@ -93,9 +101,9 @@ function initProductsPage() {
   }
 
   function applyFilter() {
-    const filtered = activeCategory === 'all'
-      ? allProducts
-      : allProducts.filter((p) => p.category === activeCategory);
+    const filtered = allProducts.filter((p) =>
+      (activeCategory === 'all' || p.category === activeCategory)
+      && (!query || p.name.toLowerCase().includes(query)));
     renderGrid(filtered);
   }
 
@@ -132,22 +140,9 @@ function initProductsPage() {
     });
   }
 
-  grid.innerHTML = '<p class="loading-msg">Ładowanie produktów…</p>';
-
-  fetch('/api/products')
-    .then((res) => {
-      if (!res.ok) throw new Error('Błąd serwera');
-      return res.json();
-    })
-    .then((products) => {
-      allProducts = products;
-      renderFilters(products);
-      applyFilter();
-    })
-    .catch(() => {
-      grid.innerHTML = '<p class="loading-msg">Nie udało się połączyć z serwerem produktów. Uruchom go poleceniem <code>npm start</code> w folderze <code>server/</code>.</p>';
-      filterList.innerHTML = '<li><a href="#" class="active">Wszystkie produkty</a></li>';
-    });
+  allProducts = PRODUCTS;
+  renderFilters(allProducts);
+  applyFilter();
 }
 
 function escapeHtml(str) {
