@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   initHeroSlider();
   initMobileMenu();
-  initMailForms();
   initProductsPage();
   markActiveNavLink();
 });
@@ -26,25 +25,6 @@ function initMobileMenu() {
   const catNav = document.querySelector('.category-nav');
   if (!toggle || !catNav) return;
   toggle.addEventListener('click', () => catNav.classList.toggle('is-open'));
-}
-
-// Formularz kontaktowy nie ma backendu — otwiera program pocztowy z gotową wiadomością.
-function initMailForms() {
-  document.querySelectorAll('form[data-mail-form]').forEach((form) => {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const val = (id) => (form.querySelector(`#${id}`)?.value || '').trim();
-      const body = [
-        val('message'),
-        '',
-        `Imię i nazwisko: ${val('name')}`,
-        `Firma: ${val('company')}`,
-        `E-mail: ${val('email')}`,
-        `Telefon: ${val('phone')}`,
-      ].join('\n');
-      window.location.href = `mailto:${form.dataset.mailTo}?subject=${encodeURIComponent(val('topic'))}&body=${encodeURIComponent(body)}`;
-    });
-  });
 }
 
 function markActiveNavLink() {

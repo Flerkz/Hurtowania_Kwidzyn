@@ -264,18 +264,9 @@ footer.site-footer .container{ padding-top:64px; }
 .contact-card .ic{ font-size:24px; flex-shrink:0; line-height:1.2; }
 .contact-card h4{ font-size:14px; margin-bottom:2px; text-transform:uppercase; letter-spacing:.08em; }
 .contact-card p{ margin:0; color: var(--ink-soft); font-size:15px; }
-.contact-form{ background:#fff; border:1px solid var(--border); border-top:6px solid var(--red); border-radius: var(--radius); padding:34px; box-shadow: var(--shadow-sm); }
-.contact-form h2{ margin-bottom:6px; }
-.contact-form .hint{ color: var(--gray); margin-bottom:22px; font-size:14px; }
-.form-row{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px; }
-.form-group{ display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
-.form-row .form-group{ margin-bottom:0; }
-.form-group label{ font-size:13px; font-weight:600; color: var(--ink-soft); }
-.form-group input, .form-group select, .form-group textarea{
-  border:2px solid var(--border); border-radius: var(--radius); padding:12px 14px; font-family:inherit; font-size:14px; outline:none; resize:vertical; background:#fff;
-}
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus{ border-color: var(--blue); }
-.contact-form .btn{ width:100%; margin-top:6px; }
+.contact-panel{ background:#fff; border:1px solid var(--border); border-top:6px solid var(--red); border-radius: var(--radius); padding:34px; box-shadow: var(--shadow-sm); }
+.contact-panel p{ color: var(--ink-soft); }
+.contact-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-top:24px; }
 
 /* ---------------- Responsive ---------------- */
 .mobile-toggle{ display:none; background:none; border:none; font-size:26px; cursor:pointer; color: var(--ink); }
@@ -309,7 +300,6 @@ footer.site-footer .container{ padding-top:64px; }
   nav.category-nav a:hover, nav.category-nav a.active{ border-left-color: var(--red); }
   .cat-grid, .value-grid, .product-grid{ grid-template-columns:1fr; }
   .cat-card{ height:220px; }
-  .form-row{ grid-template-columns:1fr; }
   .footer-grid{ grid-template-columns:1fr; }
   .trust-strip .container{ grid-template-columns:1fr; }
   .page-hero::before{ opacity:.35; }
