@@ -107,7 +107,7 @@ header.site-header{ background:#fff; position:sticky; top:0; z-index:50; box-sha
 .search-form input:focus{ border-color: var(--blue); background:#fff; }
 .search-form button{
   border:none; background: var(--blue); color:#fff; padding:0 20px;
-  border-radius: 0 var(--radius) var(--radius) 0; cursor:pointer; font-size:16px;
+  border-radius: 0 var(--radius) var(--radius) 0; cursor:pointer; display:flex; align-items:center;
 }
 .search-form button:hover{ background: var(--blue-dark); }
 
@@ -181,7 +181,6 @@ nav.category-nav a:hover, nav.category-nav a.active{ border-bottom-color: var(--
 .value-props{ background: var(--paper); padding:88px 0; }
 .value-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:22px; }
 .value-card{ background:#fff; border-radius: var(--radius); padding:32px 30px; box-shadow: var(--shadow-sm); border-top:6px solid var(--c, var(--red)); }
-.value-card .ic{ font-size:30px; margin-bottom:14px; }
 .value-card h3{ font-size:20px; }
 .value-card p{ color: var(--gray); font-size:15px; margin:0; }
 
@@ -195,6 +194,11 @@ nav.category-nav a:hover, nav.category-nav a.active{ border-bottom-color: var(--
 }
 .step h3{ font-size:20px; }
 .step p{ color: var(--gray); font-size:15px; margin:0; }
+
+/* ---------------- Gallery ---------------- */
+.gallery{ padding:0 0 92px; }
+.gallery-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:14px; }
+.gallery-grid img{ width:100%; height:auto; aspect-ratio:1/1; object-fit:cover; border-radius: var(--radius); }
 
 /* ---------------- About / text blocks ---------------- */
 .about-block{ padding:84px 0; }
@@ -261,7 +265,6 @@ footer.site-footer .container{ padding-top:64px; }
 .contact-layout .container{ display:grid; grid-template-columns: 1fr 1.2fr; gap:50px; align-items:flex-start; }
 .contact-cards{ display:grid; gap:14px; }
 .contact-card{ background: var(--paper); border-radius: var(--radius); border-left:6px solid var(--c, var(--red)); padding:20px 22px; display:flex; gap:16px; align-items:flex-start; }
-.contact-card .ic{ font-size:24px; flex-shrink:0; line-height:1.2; }
 .contact-card h4{ font-size:14px; margin-bottom:2px; text-transform:uppercase; letter-spacing:.08em; }
 .contact-card p{ margin:0; color: var(--ink-soft); font-size:15px; }
 .contact-panel{ background:#fff; border:1px solid var(--border); border-top:6px solid var(--red); border-radius: var(--radius); padding:34px; box-shadow: var(--shadow-sm); }
@@ -274,7 +277,7 @@ footer.site-footer .container{ padding-top:64px; }
 @media (max-width: 980px){
   .hero .container{ grid-template-columns:1fr; padding-top:48px; padding-bottom:56px; }
   .hero-media{ order:-1; max-width:520px; }
-  .cat-grid, .value-grid{ grid-template-columns: repeat(2,1fr); }
+  .cat-grid, .value-grid, .gallery-grid{ grid-template-columns: repeat(2,1fr); }
   .steps-grid{ grid-template-columns:1fr; }
   .about-block .container{ grid-template-columns:1fr; gap:40px; }
   .footer-grid{ grid-template-columns: repeat(2,1fr); }

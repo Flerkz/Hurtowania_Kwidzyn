@@ -73,7 +73,7 @@ function initProductsPage() {
           <span class="cat-label">${CATEGORY_NAMES[p.category] || p.category}</span>
           <h3>${escapeHtml(p.name)}</h3>
           <div class="price-row">
-            <span class="price">${p.price.toFixed(2).replace('.', ',')} zł</span>
+            <span class="price">${p.price == null ? 'Zapytaj o cenę' : `${p.price.toFixed(2).replace('.', ',')} zł`}</span>
           </div>
         </div>
       </article>
