@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initHeroSlider();
   initMobileMenu();
+  initSideCategories();
   initCategoryTiles();
   initProductsPage();
   markActiveNavLink();
@@ -36,7 +37,7 @@ function markActiveNavLink() {
     const [hrefPath, hrefQuery] = a.getAttribute('href').split('?');
     const cat = new URLSearchParams(currentSearch).get('cat');
     const active = hrefPath === currentPath
-      && (hrefQuery ? new URLSearchParams(hrefQuery).get('cat') === cat : !currentSearch);
+      && (hrefQuery ? new URLSearchParams(hrefQuery).get('cat') === cat : true);
     a.classList.toggle('active', active);
   });
 }
@@ -50,6 +51,21 @@ function categoryLabel(p) {
   if (!cat) return p.category;
   const sub = cat.subs.find((s) => s.slug === p.sub);
   return sub ? `${cat.name} › ${sub.name}` : cat.name;
+}
+
+// Pionowe menu kategorii po lewej; podkategorie wysuwają się po najechaniu.
+function initSideCategories() {
+  const list = document.getElementById('side-categories');
+  if (!list || typeof CATEGORIES === 'undefined') return;
+  list.innerHTML = CATEGORIES.map((c) => `
+    <li style="--c:${c.color}">
+      <a class="side-cat" href="produkty.html?cat=${c.slug}">${escapeHtml(c.name)}</a>
+      <div class="side-flyout">
+        <a class="side-flyout-title" href="produkty.html?cat=${c.slug}">${escapeHtml(c.name)} →</a>
+        <ul>${c.subs.map((s) => `<li><a href="produkty.html?cat=${c.slug}&sub=${s.slug}">${escapeHtml(s.name)}</a></li>`).join('')}</ul>
+      </div>
+    </li>
+  `).join('') + '<li class="side-all"><a class="side-cat" href="produkty.html">Wszystkie produkty</a></li>';
 }
 
 // Kafelki kategorii na stronie głównej (dane z CATEGORIES w products.js).
