@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initProductsPage();
   markActiveNavLink();
   initLightbox();
+  initGoogleBadge();
 });
 
 function initHeroSlider() {
@@ -192,4 +193,26 @@ function initLightbox() {
   });
   overlay.addEventListener('click', close);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+}
+
+// Plakietka z oceną Google w lewym dolnym rogu (na każdej podstronie).
+// Ocenę i liczbę opinii aktualizuje się ręcznie.
+const GOOGLE_REVIEWS = { rating: '4,7', count: 61, url: 'https://maps.google.com/?cid=16770552195896311260' };
+
+function initGoogleBadge() {
+  try { if (sessionStorage.getItem('gBadgeHidden')) return; } catch (e) { /* brak dostępu do pamięci — pokaż */ }
+  const badge = document.createElement('div');
+  badge.className = 'g-badge';
+  badge.innerHTML = `
+    <a href="${GOOGLE_REVIEWS.url}" target="_blank" rel="noopener" aria-label="Ocena ${GOOGLE_REVIEWS.rating} na 5 w Google, ${GOOGLE_REVIEWS.count} opinii">
+      <span class="g-badge-label">Opinie Google</span>
+      <span class="g-badge-score"><strong>${GOOGLE_REVIEWS.rating}</strong><span class="g-badge-stars">★★★★★</span></span>
+      <span class="g-badge-count">${GOOGLE_REVIEWS.count} opinii</span>
+    </a>
+    <button type="button" class="g-badge-close" aria-label="Ukryj">×</button>`;
+  badge.querySelector('.g-badge-close').addEventListener('click', () => {
+    badge.remove();
+    try { sessionStorage.setItem('gBadgeHidden', '1'); } catch (e) { /* ignoruj */ }
+  });
+  document.body.appendChild(badge);
 }

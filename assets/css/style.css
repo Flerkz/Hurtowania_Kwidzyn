@@ -351,6 +351,18 @@ footer.site-footer .container{ padding-top:64px; }
 .map-link{ margin:14px 0 0; }
 .map-link a{ color: var(--red); font-weight:600; }
 
+/* ---------------- Google badge (róg ekranu) ---------------- */
+.g-badge{ position:fixed; left:18px; bottom:18px; z-index:90; background:#fff; border-radius: var(--radius); border-top:4px solid var(--yellow); box-shadow: var(--shadow-md); }
+.g-badge a{ display:grid; gap:2px; padding:10px 34px 10px 16px; }
+.g-badge-label{ font-family: var(--font-display); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color: var(--gray); }
+.g-badge-score{ display:flex; align-items:center; gap:8px; }
+.g-badge-score strong{ font-family: var(--font-display); font-size:24px; line-height:1; color: var(--ink); }
+.g-badge-stars{ color: var(--yellow); letter-spacing:1px; font-size:16px; }
+.g-badge-count{ font-size:12.5px; color: var(--ink-soft); }
+.g-badge a:hover .g-badge-count{ color: var(--red); text-decoration:underline; }
+.g-badge-close{ position:absolute; top:4px; right:6px; width:24px; height:24px; border:none; background:none; color: var(--gray); font-size:18px; line-height:1; cursor:pointer; }
+.g-badge-close:hover{ color: var(--ink); }
+
 /* ---------------- Responsive ---------------- */
 .mobile-toggle{ display:none; background:none; border:none; font-size:26px; cursor:pointer; color: var(--ink); }
 
@@ -391,4 +403,7 @@ footer.site-footer .container{ padding-top:64px; }
   .trust-strip .container{ grid-template-columns:1fr; }
   .page-hero::before{ opacity:.35; }
   .newsletter::before{ display:none; }
+  .g-badge{ left:10px; bottom:10px; }
+  .g-badge a{ padding:7px 30px 7px 12px; }
+  .g-badge-label{ display:none; }
 }
